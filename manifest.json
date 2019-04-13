@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "Vinmonopolet Untappd Link",
+  "description": "Henter informasjon om øl fra untappd og viser det på vinmonopolet sine sider.",
+  "version": "1.0.0",
+  "permissions": [
+    "*://*.untappd.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.vinmonopolet.no/*"
+      ],
+      "js": ["js/jquery-3.4.0.min.js", "js/content.js"],
+      "css": ["css/main.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    "db.json"
+  ]
+}
