@@ -19,7 +19,7 @@
 | :--------------------------: | :-------------------------------: | :------------------------: |
 | ![No match](img/nomatch.png) | ![Not had before](img/nothad.png) | ![Had before](img/had.png) |
 
-Finding good beers in the Vinmonopolet online store is a tedious task. You need to find the best beers and preferably some new ones. This extensions links vinmonopolet with untappd so that you can see what ratings the beers and whether you have had them directly in the product listing.
+Finding good beers in Vinmonopolets online store is a tedious task. You need to find the best beers and preferably some new ones. This extensions links Vinmonopolet with Untappd so that you can see what ratings the beers have and whether you have had them directly in the product listing.
 
 ### Built With
 

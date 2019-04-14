@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Vinmonopolet Untappd Link",
-  "description": "Henter informasjon om øl fra untappd og viser det på vinmonopolet sine sider.",
+  "description": "Gets information about beer from Untappd and displays it inline at Vinmonopolet.",
   "version": "1.0.0",
   "permissions": [
     "*://*.untappd.com/*"
