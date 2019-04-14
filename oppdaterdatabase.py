@@ -1,13 +1,14 @@
 import json
 import pandas as pd
 import pyperclip
+from collections import OrderedDict
 
 
 def last_database():
     with open('db.json') as json_file:
         data = json.load(json_file)
 
-    print(f'Lastet database med {len(data["database"])} elementer')
+    print(f'Lastet database med {len(data)} elementer')
 
     return data
 
@@ -42,7 +43,7 @@ def last_produkter():
 
 
 database = last_database()
-databaseset = set(database['database'].keys())
+databaseset = set(database.keys())
 produktdata = last_produkter()
 produktdata.sort_values(by='Varenummer', ascending=False, inplace=True)
 
@@ -66,8 +67,12 @@ for index, row in produktdata.iterrows():
     if not untappdnummer:
         break
 
-    database['database'][str(row['Varenummer'])] = int(untappdnummer)
+    database[str(row['Varenummer'])] = int(untappdnummer)
     print()
+
+
+# Sort data
+database = OrderedDict(sorted(database.items(), key=lambda t: int(t[0])))
 
 with open('db.json', 'w') as outfile:
     json.dump(database, outfile, indent=4)

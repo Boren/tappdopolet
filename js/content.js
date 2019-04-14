@@ -52,8 +52,7 @@ window.setTimeout(function() {
 
   fetch(dburl)
     .then(response => response.json())
-    .then(json => {
-      console.log(json);
+    .then(database => {
       $(".product-item").each(function(index) {
         let varenummer = finnVarenummer(this);
 
@@ -73,7 +72,7 @@ window.setTimeout(function() {
           .append(ratingHTML);
         ratingElement = $(ratingElement).find("#untappd-container");
 
-        let untappdnummer = json["database"][varenummer];
+        let untappdnummer = database[varenummer];
 
         if (untappdnummer) {
           chrome.runtime.sendMessage(
