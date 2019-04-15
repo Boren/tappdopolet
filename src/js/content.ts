@@ -1,4 +1,6 @@
-function handleResponse(element, text, id) {
+import * as $ from "jquery";
+
+function handleResponse(element, text, id): void {
   let html = $.parseHTML(text);
 
   let ratingtext = $(html)
@@ -38,7 +40,7 @@ function handleResponse(element, text, id) {
   $(element).replaceWith(ratingHTML);
 }
 
-function finnVarenummer(element) {
+function finnVarenummer(element): string {
   let itemsummary = $(element)
     .find(".product-item__summary")
     .text();
@@ -52,7 +54,7 @@ const dburl = chrome.runtime.getURL("db.json");
 fetch(dburl)
   .then(response => response.json())
   .then(database => {
-    $(".product-item").each(function(index) {
+    $(".product-item").each(function() {
       let varenummer = finnVarenummer(this);
 
       let ratingHTML = `

@@ -4,8 +4,10 @@ import pyperclip
 from collections import OrderedDict
 
 
+databasePath = 'src/db.json'
+
 def last_database():
-    with open('db.json') as json_file:
+    with open(databasePath) as json_file:
         data = json.load(json_file)
 
     print(f'Lastet database med {len(data)} elementer')
@@ -74,7 +76,7 @@ for index, row in produktdata.iterrows():
 # Sort data
 database = OrderedDict(sorted(database.items(), key=lambda t: int(t[0])))
 
-with open('db.json', 'w') as outfile:
-    json.dump(database, outfile, indent=4)
+with open(databasePath, 'w') as outfile:
+    json.dump(database, outfile, indent=2)
 
 print("Lagret")
