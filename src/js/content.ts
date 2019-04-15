@@ -53,6 +53,15 @@ function handleResponse(element, text, id): void {
     $(element).replaceWith(ratingHTML);
 }
 
+function finnVaretype(element): string {
+    let itemsummary = $(element)
+        .find('.product-item__summary')
+        .text();
+    let varetype = itemsummary.split(',')[0].trim();
+
+    return varetype;
+}
+
 function finnVarenummer(element): string {
     let itemsummary = $(element)
         .find('.product-item__summary')
@@ -63,6 +72,9 @@ function finnVarenummer(element): string {
 }
 
 function handleItem(element, database): void {
+    let varetype = finnVaretype(element);
+    if (varetype !== 'Øl') return;
+
     let varenummer = finnVarenummer(element);
 
     let ratingHTML = `
