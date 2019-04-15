@@ -62,49 +62,53 @@ function finnVarenummer(element): string {
     return varenummer;
 }
 
+function handleItem(element, database): void {
+    let varenummer = finnVarenummer(element);
+
+    let ratingHTML = `
+      <div id="untappd-container" style="position: absolute; top: 10px; left: 50px; font-size: 18px; line-height: 1.5;">
+          <div class="product-favorite ">
+              <label class="favset-off" style="padding: 3px 4px;">
+                  <span id="rating-text">
+                      <div class="loader"></div>
+                  </span>
+              </label>
+          </div>
+      </div>`;
+
+    let ratingElement = $(element)
+        .find('.product-item__tools')
+        .append(ratingHTML);
+    ratingElement = $(ratingElement).find('#untappd-container');
+
+    let untappdnummer = database[varenummer];
+
+    if (untappdnummer) {
+        chrome.runtime.sendMessage({ contentScriptQuery: 'hentRating', beerId: untappdnummer }, text =>
+            handleResponse(ratingElement, text, untappdnummer),
+        );
+    } else {
+        ratingHTML = `
+          <div id="untappd-container" style="position: absolute; top: 10px; left: 50px; font-size: 12px; line-height: 2.5;">
+              <div class="product-favorite ">
+                  <label class="favset-off" style="padding: 3px 4px;">
+                      <span id="rating-text">
+                          Ingen match
+                      </span>
+                  </label>
+              </div>
+          </div>`;
+
+        $(ratingElement).replaceWith(ratingHTML);
+    }
+}
+
 const dburl = chrome.runtime.getURL('db.json');
 
 fetch(dburl)
     .then(response => response.json())
     .then(database => {
         $('.product-item').each(function() {
-            let varenummer = finnVarenummer(this);
-
-            let ratingHTML = `
-          <div id="untappd-container" style="position: absolute; top: 10px; left: 50px; font-size: 18px; line-height: 1.5;">
-              <div class="product-favorite ">
-                  <label class="favset-off" style="padding: 3px 4px;">
-                      <span id="rating-text">
-                          <div class="loader"></div>
-                      </span>
-                  </label>
-              </div>
-          </div>`;
-
-            let ratingElement = $(this)
-                .find('.product-item__tools')
-                .append(ratingHTML);
-            ratingElement = $(ratingElement).find('#untappd-container');
-
-            let untappdnummer = database[varenummer];
-
-            if (untappdnummer) {
-                chrome.runtime.sendMessage({ contentScriptQuery: 'hentRating', beerId: untappdnummer }, text =>
-                    handleResponse(ratingElement, text, untappdnummer),
-                );
-            } else {
-                ratingHTML = `
-              <div id="untappd-container" style="position: absolute; top: 10px; left: 50px; font-size: 12px; line-height: 2.5;">
-                  <div class="product-favorite ">
-                      <label class="favset-off" style="padding: 3px 4px;">
-                          <span id="rating-text">
-                              Ingen match
-                          </span>
-                      </label>
-                  </div>
-              </div>`;
-
-                $(ratingElement).replaceWith(ratingHTML);
-            }
+            handleItem(this, database);
         });
     });
