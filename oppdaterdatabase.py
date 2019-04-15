@@ -1,10 +1,12 @@
 import json
 import pandas as pd
 import pyperclip
+import requests
 from collections import OrderedDict
 
 
 databasePath = 'src/db.json'
+
 
 def last_database():
     with open(databasePath) as json_file:
@@ -36,7 +38,12 @@ def last_produkter():
         'Scotch ale'
     ]
 
-    produktdata = pd.read_csv(produkturl, sep=';', encoding='ISO-8859-1')
+    r = requests.get(produkturl)
+
+    with open('produkter.csv', 'wb') as f:
+        f.write(r.content)
+
+    produktdata = pd.read_csv('produkter.csv', sep=';', encoding='ISO-8859-1')
     produktdata = produktdata[produktdata['Varetype'].isin(varetyper)]
 
     print(f'Lastet produktliste med {len(produktdata)} produkter')
