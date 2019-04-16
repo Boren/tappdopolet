@@ -1,14 +1,8 @@
 version: 2.1
-
-executors:
-    my-executor:
-        docker:
-            - image: circleci/node:11
-        working_directory: /workspace
-
 jobs:
     build:
-        executor: my-executor
+        docker:
+            - image: circleci/node:11
         steps:
             - checkout
             - run:
@@ -23,12 +17,13 @@ jobs:
                       cd dist
                       zip -r ../dist.zip .
             - persist_to_workspace:
-                  root: /workspace
+                  root: /home/circleci/project
                   paths:
                       - dist.zip
 
     publish:
-        executor: my-executor
+        docker:
+            - image: circleci/node:11
         steps:
             - attach_workspace:
                   at: /workspace
