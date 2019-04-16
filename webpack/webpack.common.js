@@ -34,6 +34,7 @@ module.exports = {
             { from: 'src/manifest.json', to: 'manifest.json' },
             { from: 'src/css', to: 'css' },
             { from: 'src/db.json', to: 'db.json' },
+            { from: 'src/*.png', to: '', flatten: true },
         ]),
     ],
 };
