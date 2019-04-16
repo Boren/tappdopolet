@@ -2,14 +2,12 @@ version: 2
 jobs:
     build:
         docker:
-            - image: ubuntu:19.04
+            - image: circleci/node:11
         steps:
             - checkout
             - run:
                   name: 'Install Dependencies'
-                  command: |
-                      apt-get update
-                      apt-get -y install curl jq yarn
+                  command: yarn install
             - run:
                   name: 'Build'
                   command: yarn build
@@ -19,7 +17,7 @@ jobs:
 
     publish:
         docker:
-            - image: ubuntu:19.04
+            - image: circleci/node:11
         steps:
             - run:
                   name: 'Publish Extension'
