@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 
-function handleResponse(element, text, id): void {
+function handleResponse(element: any, text: string, id: number): void {
     let html = $.parseHTML(text);
 
     let ratingtext = $(html)
@@ -53,7 +53,7 @@ function handleResponse(element, text, id): void {
     $(element).replaceWith(ratingHTML);
 }
 
-function finnVaretype(element): string {
+function finnVaretype(element: any): string {
     let itemsummary = $(element)
         .find('.product-item__summary')
         .text();
@@ -62,7 +62,7 @@ function finnVaretype(element): string {
     return varetype;
 }
 
-function finnVarenummer(element): string {
+function finnVarenummer(element: any): string {
     let itemsummary = $(element)
         .find('.product-item__summary')
         .text();
@@ -71,9 +71,9 @@ function finnVarenummer(element): string {
     return varenummer;
 }
 
-function handleItem(element, database): void {
+function handleItem(element: any, database: object): void {
     let varetype = finnVaretype(element);
-    if (varetype !== 'Øl') return;
+    if (!['Øl', 'Sider', 'Mjød'].includes(varetype)) return;
 
     let varenummer = finnVarenummer(element);
 
@@ -93,6 +93,7 @@ function handleItem(element, database): void {
         .append(ratingHTML);
     ratingElement = $(ratingElement).find('#untappd-container');
 
+    // @ts-ignore
     let untappdnummer = database[varenummer];
 
     if (untappdnummer) {

@@ -35,7 +35,9 @@ def last_produkter():
         'Barley wine',
         'Brown ale',
         'Red/amber',
-        'Scotch ale'
+        'Scotch ale',
+        'Mjød',
+        'Sider'
     ]
 
     r = requests.get(produkturl)

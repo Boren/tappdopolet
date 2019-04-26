@@ -6,4 +6,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             .then(text => sendResponse(text));
         return true;
     }
+
+    return false;
 });
