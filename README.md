@@ -1,5 +1,7 @@
 # Vinmonopolet Untappd Linker
 
+[![CircleCI](https://circleci.com/gh/Boren/tappdopolet/tree/master.svg?style=svg)](https://circleci.com/gh/Boren/tappdopolet/tree/master)
+
 ## Table of Contents
 
 - [Vinmonopolet Untappd Linker](#vinmonopolet-untappd-linker)
