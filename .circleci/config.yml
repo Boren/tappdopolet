@@ -35,10 +35,7 @@ workflows:
     version: 2
     main:
         jobs:
-            - build:
-                  filters:
-                      tags:
-                          only: /.*/
+            - build
             - publish:
                   requires:
                       - build
