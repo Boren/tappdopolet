@@ -15,13 +15,13 @@ jobs:
                   name: 'Package Extension'
                   command: |
                       cd dist
-                      zip -r ../dist.zip .
+                      zip -r ../tappdopolet-${CIRCLE_TAG}.zip .
             - persist_to_workspace:
                   root: /home/circleci/project
                   paths:
-                      - dist.zip
+                      - tappdopolet-${CIRCLE_TAG}.zip
 
-    publish:
+    publish-chrome-web-store:
         docker:
             - image: cibuilds/chrome-extension:latest
         steps:
@@ -29,14 +29,33 @@ jobs:
                   at: /workspace
             - run:
                   name: 'Publish Extension'
-                  command: publish /workspace/dist.zip
+                  command: publish /workspace/tappdopolet-${CIRCLE_TAG}.zip
+
+    publish-github-release:
+        docker:
+            - image: cibuilds/github:0.12
+        steps:
+            - attach_workspace:
+                  at: /workspace
+            - run:
+                  name: 'Publish Release on GitHub'
+                  command: |
+                      ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} ${CIRCLE_TAG} /workspace/tappdopolet-${CIRCLE_TAG}.zip
 
 workflows:
     version: 2
     main:
         jobs:
             - build
-            - publish:
+            - publish-chrome-web-store:
+                  requires:
+                      - build
+                  filters:
+                      branches:
+                          ignore: /.*/
+                      tags:
+                          only: /^v.*/
+            - publish-github-release:
                   requires:
                       - build
                   filters:
