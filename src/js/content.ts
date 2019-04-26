@@ -1,4 +1,4 @@
-import * as $ from 'jquery';
+import * as $ from 'jquery/dist/jquery.slim.js';
 
 function handleResponse(element: any, text: string, id: number): void {
     let html = $.parseHTML(text);
