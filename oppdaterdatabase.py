@@ -3,23 +3,23 @@ import pandas as pd
 import pyperclip
 import requests
 from collections import OrderedDict
-
+from termcolor import colored
 
 databasePath = 'src/db.json'
 
 
-def last_database():
+def load_database():
     with open(databasePath) as json_file:
         data = json.load(json_file)
 
-    print(f'Lastet database med {len(data)} elementer')
+    print(f'Loaded database with {len(data)} elements')
 
     return data
 
 
-def last_produkter():
+def load_products():
     # URL hentes fra https://www.vinmonopolet.no/datadeling
-    produkturl = 'https://www.vinmonopolet.no/medias/sys_master/products/products/hbc/hb0/8834253127710/produkter.csv'
+    produkturl = 'https://www.vinmonopolet.no/medias/sys_master/products/products/hbc/hb0/8834253127710/produkter.csv'  # noqa
     varetyper = [
         'India pale ale',
         'Porter & stout',
@@ -48,14 +48,34 @@ def last_produkter():
     produktdata = pd.read_csv('produkter.csv', sep=';', encoding='ISO-8859-1')
     produktdata = produktdata[produktdata['Varetype'].isin(varetyper)]
 
-    print(f'Lastet produktliste med {len(produktdata)} produkter')
+    print(f'Loaded product list with {len(produktdata)} products')
 
     return produktdata
 
 
-database = last_database()
+def save_database(database, path):
+    # Sort data
+    database = OrderedDict(sorted(database.items(), key=lambda t: int(t[0])))
+
+    with open(path, 'w') as outfile:
+        json.dump(database, outfile, indent=2)
+
+
+def get_input():
+    try:
+        untappdnummer = input(colored('Skriv inn untappd nummer: ', 'yellow'))
+        untappdnummer = int(untappdnummer)
+        if not untappdnummer:
+            return 0
+
+        return untappdnummer
+    except:
+        return 0
+
+
+database = load_database()
 databaseset = set(database.keys())
-produktdata = last_produkter()
+produktdata = load_products()
 produktdata.sort_values(by='Varenummer', ascending=False, inplace=True)
 
 print()
@@ -73,19 +93,12 @@ for index, row in produktdata.iterrows():
 
     pyperclip.copy(row['Varenavn'])
 
-    untappdnummer = input("Skriv inn untappd nummer: ")
+    varenummer = get_input()
+    if varenummer > 0:
+        database[str(row['Varenummer'])] = varenummer
+        save_database(database, databasePath)
+        print(colored('Saved', 'green'))
+    else:
+        print(colored('Skipped', 'red'))
 
-    if not untappdnummer:
-        break
-
-    database[str(row['Varenummer'])] = int(untappdnummer)
     print()
-
-
-# Sort data
-database = OrderedDict(sorted(database.items(), key=lambda t: int(t[0])))
-
-with open(databasePath, 'w') as outfile:
-    json.dump(database, outfile, indent=2)
-
-print("Lagret")
