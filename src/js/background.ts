@@ -1,4 +1,4 @@
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse): boolean {
     if (request.contentScriptQuery == 'hentRating') {
         var url = 'https://untappd.com/beer/' + encodeURIComponent(request.beerId);
         fetch(url)

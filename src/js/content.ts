@@ -1,6 +1,6 @@
 import * as $ from 'jquery/dist/jquery.slim.js';
 
-function handleResponse(element: any, text: string, id: number): void {
+function handleResponse(element: JQuery, text: string, id: number): void {
     let html = $.parseHTML(text);
 
     let ratingtext = $(html)
@@ -53,7 +53,7 @@ function handleResponse(element: any, text: string, id: number): void {
     $(element).replaceWith(ratingHTML);
 }
 
-function finnVaretype(element: any): string {
+function finnVaretype(element: HTMLElement): string {
     let itemsummary = $(element)
         .find('.product-item__summary')
         .text();
@@ -62,7 +62,7 @@ function finnVaretype(element: any): string {
     return varetype;
 }
 
-function finnVarenummer(element: any): string {
+function finnVarenummer(element: HTMLElement): string {
     let itemsummary = $(element)
         .find('.product-item__summary')
         .text();
@@ -71,7 +71,7 @@ function finnVarenummer(element: any): string {
     return varenummer;
 }
 
-function handleItem(element: any, database: object): void {
+function handleItem(element: HTMLElement, database: object): void {
     let varetype = finnVaretype(element);
     if (!['Øl', 'Sider', 'Mjød'].includes(varetype)) return;
 
@@ -97,8 +97,12 @@ function handleItem(element: any, database: object): void {
     let untappdnummer = database[varenummer];
 
     if (untappdnummer) {
-        chrome.runtime.sendMessage({ contentScriptQuery: 'hentRating', beerId: untappdnummer }, text =>
-            handleResponse(ratingElement, text, untappdnummer),
+        chrome.runtime.sendMessage(
+            {
+                contentScriptQuery: 'hentRating',
+                beerId: untappdnummer,
+            },
+            text => handleResponse(ratingElement, text, untappdnummer),
         );
     } else {
         ratingHTML = `
