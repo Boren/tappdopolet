@@ -1,3 +1,4 @@
+import argparse
 import json
 import pandas as pd
 import pyperclip
@@ -63,8 +64,7 @@ def save_database(database, path):
 
 def get_input():
     try:
-        untappdnummer = input(colored('Skriv inn untappd nummer: ', 'yellow'))
-        untappdnummer = int(untappdnummer)
+        untappdnummer = int(input(colored('Skriv inn untappd nummer: ', 'yellow')))
         if not untappdnummer:
             return 0
 
@@ -75,30 +75,47 @@ def get_input():
 
 database = load_database()
 databaseset = set(database.keys())
-produktdata = load_products()
-produktdata.sort_values(by='Varenummer', ascending=False, inplace=True)
 
 print()
 
-for index, row in produktdata.iterrows():
-    if str(row['Varenummer']) in databaseset:
-        continue
+parser = argparse.ArgumentParser(description='Process some integers.')
 
-    print(f"Varenummer : {row['Varenummer']}")
-    print(f"Varenavn   : {row['Varenavn']}")
-    print(f"Produsent  : {row['Produsent']}")
-    print(f"Varetype   : {row['Varetype']}")
-    print(f"Land       : {row['Land']}")
-    print(f"Alkohol    : {row['Alkohol']}")
+parser.add_argument('--manual', dest='manual', action='store_true')
+parser.set_defaults(manual=False)
+args = parser.parse_args()
 
-    pyperclip.copy(row['Varenavn'])
+if args.manual:
+    while True:
+        polnummer = int(input(colored('Skriv inn vinmonopol nummer: ', 'yellow')))
+        untappdnummer = int(input(colored('Skriv inn untappd nummer: ', 'yellow')))
 
-    varenummer = get_input()
-    if varenummer > 0:
-        database[str(row['Varenummer'])] = varenummer
+        database[str(polnummer)] = untappdnummer
         save_database(database, databasePath)
-        print(colored('Saved', 'green'))
-    else:
-        print(colored('Skipped', 'red'))
 
-    print()
+        print()
+else:
+    produktdata = load_products()
+    produktdata.sort_values(by='Varenummer', ascending=False, inplace=True)
+
+    for index, row in produktdata.iterrows():
+        if str(row['Varenummer']) in databaseset:
+            continue
+
+        print(f"Varenummer : {row['Varenummer']}")
+        print(f"Varenavn   : {row['Varenavn']}")
+        print(f"Produsent  : {row['Produsent']}")
+        print(f"Varetype   : {row['Varetype']}")
+        print(f"Land       : {row['Land']}")
+        print(f"Alkohol    : {row['Alkohol']}")
+
+        pyperclip.copy(row['Varenavn'])
+
+        varenummer = get_input()
+        if varenummer > 0:
+            database[str(row['Varenummer'])] = varenummer
+            save_database(database, databasePath)
+            print(colored('Saved', 'green'))
+        else:
+            print(colored('Skipped', 'red'))
+
+        print()
