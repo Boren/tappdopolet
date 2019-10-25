@@ -1,30 +1,31 @@
 {
-    "name": "tappdopolet",
-    "version": "1.1.4",
-    "main": "index.js",
-    "scripts": {
-        "start": "webpack --mode development --watch",
-        "build": "webpack --mode production"
-    },
-    "repository": "git@github.com:Boren/tappdopolet.git",
-    "author": "Fredrik Bore <fredrik@bore.ai>",
-    "license": "MIT",
-    "dependencies": {
-        "jquery": "3.4.1"
-    },
-    "devDependencies": {
-        "@types/chrome": "0.0.91",
-        "@types/jquery": "3.3.31",
-        "@typescript-eslint/eslint-plugin": "2.4.0",
-        "@typescript-eslint/parser": "2.4.0",
-        "copy-webpack-plugin": "5.0.4",
-        "eslint": "6.5.1",
-        "eslint-config-prettier": "6.4.0",
-        "eslint-plugin-prettier": "3.1.1",
-        "prettier": "1.18.2",
-        "ts-loader": "6.2.0",
-        "typescript": "3.6.4",
-        "webpack": "4.41.2",
-        "webpack-cli": "3.3.9"
-    }
+  "name": "tappdopolet",
+  "version": "1.1.4",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "repository": "git@github.com:Boren/tappdopolet.git",
+  "author": "Fredrik Bore <fredrik@bore.ai>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/chrome": "0.0.91",
+    "@types/jquery": "3.3.31",
+    "@typescript-eslint/eslint-plugin": "2.5.0",
+    "@typescript-eslint/parser": "2.5.0",
+    "copy-webpack-plugin": "5.0.4",
+    "eslint": "6.5.1",
+    "eslint-config-prettier": "6.4.0",
+    "eslint-plugin-prettier": "3.1.1",
+    "jquery": "3.4.1",
+    "prettier": "1.18.2",
+    "stylelint": "^11.1.1",
+    "stylelint-config-prettier": "^6.0.0",
+    "stylelint-prettier": "^1.1.1",
+    "ts-loader": "6.2.1",
+    "typescript": "3.6.4",
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.9"
+  }
 }
