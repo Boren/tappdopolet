@@ -12,8 +12,8 @@
   "dependencies": {
     "@types/chrome": "0.0.91",
     "@types/jquery": "3.3.31",
-    "@typescript-eslint/eslint-plugin": "2.5.0",
-    "@typescript-eslint/parser": "2.5.0",
+    "@typescript-eslint/eslint-plugin": "2.6.0",
+    "@typescript-eslint/parser": "2.6.0",
     "copy-webpack-plugin": "5.0.4",
     "eslint": "6.6.0",
     "eslint-config-prettier": "6.5.0",
