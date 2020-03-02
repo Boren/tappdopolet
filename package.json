@@ -10,7 +10,7 @@
   "author": "Fredrik Bore <fredrik@bore.ai>",
   "license": "MIT",
   "dependencies": {
-    "@types/chrome": "0.0.93",
+    "@types/chrome": "0.0.98",
     "@types/jquery": "3.3.32",
     "@typescript-eslint/eslint-plugin": "2.19.0",
     "@typescript-eslint/parser": "2.19.0",
