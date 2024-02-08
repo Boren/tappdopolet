@@ -1,3 +1,5 @@
+This project is unmaintaned. I suggest using [Winmonopolet](https://www.winmonopolet.no) and/or [Ølmonopolet](https://olmonopolet.app/)
+
 # Vinmonopolet Untappd Linker
 
 [![CircleCI](https://circleci.com/gh/Boren/tappdopolet/tree/master.svg?style=svg)](https://circleci.com/gh/Boren/tappdopolet/tree/master)
